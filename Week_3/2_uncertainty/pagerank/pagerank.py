@@ -85,7 +85,30 @@ def sample_pagerank(corpus, damping_factor, n):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    raise NotImplementedError
+
+    current_page = corpus[random.randint(1, len(corpus))]
+    list_visited_pages = []
+    page_rank = {}
+    nr_pages_visited = 0
+
+    while nr_pages_visited < n:
+        nr_pages_visited += 1
+        page_distribution = []
+        list_visited_pages.append(current_page)
+        next_page_corpus = transition_model(corpus, current_page, damping_factor)
+        for page, probability in next_page_corpus.items():
+            probability_page = probability * 100
+            for i in range(probability_page):
+                page_distribution.append(page)
+        current_page = random.choice(page_distribution)
+
+    for page in list_visited_pages:
+        if page in page_rank:
+            page_rank[page] += 1
+        else:
+            page_rank.update({page: 1})
+
+    return page_rank
 
 
 def iterate_pagerank(corpus, damping_factor):
@@ -97,8 +120,33 @@ def iterate_pagerank(corpus, damping_factor):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    raise NotImplementedError
+    number_pages = len(corpus)
+    page_rank = {}
+    highest_page_rank_change = 1
 
+    for page in corpus:
+        page_rank.update({page: (1/number_pages)})
 
+    while highest_page_rank_change < 0.001:
+        highest_page_rank_change = 0
+        for page in corpus:
+            page_rank_current = ((1 - damping_factor) / number_pages)
+            sum_of_links = 0
+            for link in corpus[page]:
+                sum_of_links += (page_rank[link]/corpus[link])
+            page_rank_current += number_pages * sum_of_links
+            page_rank_change_current = abs(page_rank_current - page_rank[page])
+            if highest_page_rank_change < page_rank_change_current:
+                highest_page_rank_change = page_rank_change_current
+            page_rank[page] = page_rank_current
+
+    # Check that values in page rank dict sum to 1
+    sum = 0
+    for page_rank_value in page_rank.values():
+        sum += page_rank_value
+    if sum != 1:
+        raise ValueError("PageRank values do not sum to 1")
+
+    return page_rank
 if __name__ == "__main__":
     main()
