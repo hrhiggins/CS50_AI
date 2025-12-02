@@ -94,7 +94,6 @@ def result(board, action):
         raise Exception("No such action")
 
 
-
 def winner(board):
     """
     Returns the winner of the game, if there is one.

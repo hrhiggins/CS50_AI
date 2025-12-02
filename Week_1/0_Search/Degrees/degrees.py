@@ -158,8 +158,6 @@ def shortest_path(source, target):
                         frontier.append(node)
 
         ticker = ticker + 1
-    # TODO
-    #raise NotImplementedError
 
 
 def person_id_for_name(name):

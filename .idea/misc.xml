@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="CS50_AI" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="CS50_AI" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12.3 WSL (Ubuntu): (/home/harry/.virtualenvs/CS50_AI/bin/python)" project-jdk-type="Python SDK" />
 </project>
